@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((500, 500))
 
 # title and icon
 pygame.display.set_caption("FLAPPY BIRD")
-icon = pygame.image.load('redbird-upflap.png')
+icon = pygame.image.load('redbird-mudflap.png')
 pygame.display.set_icon(icon)
 
 # Adjusting game speed
