@@ -5,7 +5,7 @@ import sys  # importing sys
 pygame.init()
 
 # creating a screen
-screen = pygame.display.set_mode((500, 500))
+screen = pygame.display.set_mode((500,500))
 
 # title and icon
 pygame.display.set_caption("FLAPPYBIRD")
