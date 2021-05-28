@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((500,500))
 
 # title and icon
 pygame.display.set_caption("FLAPPYBIRD")
-icon = pygame.image.load('redbird-mudflap.png')
+icon = pygame.image.load('redbird-downflap.png')
 pygame.display.set_icon(icon)
 
 # Adjusting game speed
@@ -25,13 +25,13 @@ floor = pygame.transform.scale2x(floor)
 floorX = 0
 
 # adding bird
-bird = pygame.image.load('bluebird-midflap.png')
+bird = pygame.image.load('redbird-downflap.png')
 bird = pygame.transform.scale2x(bird)
 bird_box = bird.get_rect(center=(100, 250))
 fall = 0.5  # gravity
 bird_movement = 0
 
-# adding pipes/multipal pipes
+# adding pipes/multiple pipes
 pipe_load = pygame.image.load('pipe-green.png')
 pipe_load = pygame.transform.scale2x(pipe_load)
 pipe_list = []
@@ -52,8 +52,13 @@ def pipe_appear():
 
 def pipe_movement(pipes):
     for pipe in pipes:
-        pipe.center -= 5
-        return pipes
+        pipe.centerx -= 5
+    return pipes
+
+def draw_pipes(pipes):
+    for pipe in pipes:
+        screen.blits(pipe_load,pipe)
+
 
 
 # game loop
@@ -80,7 +85,9 @@ while True:
     screen.blit(bird, bird_box)
     bird_movement += fall
     bird_box.centery += bird_movement
-
+    #pipe movement
+    pipe_list=pipe_movement(pipe_list)
+    draw_pipes(pipe_list)
     # floor movement
     floorX -= 1
     floor_movement()
