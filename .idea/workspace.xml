@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a83cdb5-d993-493b-8971-aa09a1a3342f" name="Default Changelist" comment="6" />
+    <list default="true" id="6a83cdb5-d993-493b-8971-aa09a1a3342f" name="Default Changelist" comment="6">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game code/game code.py" beforeDir="false" afterPath="$PROJECT_DIR$/game code/game code.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

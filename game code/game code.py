@@ -12,15 +12,15 @@ icon = pygame.image.load('redbird-downflap.png')
 pygame.display.set_icon(icon)
 
 # Adjusting game speed
-speed = pygame.time.Clock()
+clock = pygame.time.Clock()
 
 # adding background image
-background = pygame.image.load('background-day.png')
-background = pygame.transform.scale(background, (500, 500))
+bg_surface = pygame.image.load('background-day.png')
+bg_surface = pygame.transform.scale(bg_surface, (500, 500))
 
 # adding floor image
-floor = pygame.image.load('base.png')
-floor = pygame.transform.scale2x(floor)
+floor_surface = pygame.image.load('base.png')
+floor_surface = pygame.transform.scale2x(floor_surface)
 floorX = 0
 
 # adding bird
@@ -40,8 +40,8 @@ pygame.time.set_timer(pipe_timer, 1000)
 
 # function to make floor continuously moving in the screen
 def floor_movement():
-    screen.blit(floor, (floorX, 400))
-    screen.blit(floor, (floorX + 500, 400))
+    screen.blit(floor_surface, (floorX, 400))
+    screen.blit(floor_surface, (floorX + 500, 400))
 
 
 def pipe_appear():
@@ -55,8 +55,8 @@ def pipe_movement(pipes):
     return pipes
 
 def draw_pipes(pipes):
-    for pipe in pipes:
-        screen.blits(pipe_load,pipe)
+    for pipe_timer in pipes:
+        screen.blits(pipe_load,pipe_timer)
 
 
 
@@ -64,21 +64,21 @@ def draw_pipes(pipes):
 while True:
 
     pygame.display.update()
-    speed.tick(150)
+    clock.tick(150)
 
-    for movement in pygame.event.get():
-        if movement.type == pygame.QUIT:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
         # if key is Spacebar bird will move upward
-        if movement.type == pygame.KEYDOWN:
-            if movement.key == pygame.K_SPACE:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
                 bird_movement = 0
                 bird_movement -= 10
-        if movement.type == pipe_timer:
+        if event.type == pipe_timer:
             pipe_list.append(pipe_appear())
-    screen.blit(background, (0, 0))
+    screen.blit(bg_surface, (0, 0))
 
     # bird movement
     screen.blit(bird, bird_box)
