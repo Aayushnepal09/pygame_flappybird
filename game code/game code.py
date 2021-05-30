@@ -25,9 +25,9 @@ floor_surface = pygame.transform.scale2x(floor_surface)
 floorX = 0
 
 # adding bird
-bird = pygame.image.load('redbird-downflap.png')
-bird = pygame.transform.scale2x(bird)
-bird_box = bird.get_rect(center=(100, 250))
+bird_surface = pygame.image.load('redbird-downflap.png')
+bird_surface = pygame.transform.scale2x(bird_surface)
+bird_box = bird_surface.get_rect(center=(100, 250))
 fall = 0.5  # gravity
 bird_movement = 0
 
@@ -36,7 +36,7 @@ pipe_surface = pygame.image.load('pipe-green.png')
 pipe_surface = pygame.transform.scale2x(pipe_surface)
 pipe_list = []
 SPAWNPIPE = pygame.USEREVENT
-pygame.time.set_timer(SPAWNPIPE, 1000)
+pygame.time.set_timer(SPAWNPIPE, 1500)
 pipe_height = [500, 300, 400]
 
 
@@ -61,12 +61,28 @@ def move_pipes(pipes):
 
 def draw_pipes(pipes):
     for pipe in pipes:
-        if pipe.bottom>=700:
+        if pipe.bottom >= 700:
             screen.blit(pipe_surface, pipe)
         else:
-            flip_pipe=pygame.transform.flip(pipe_surface,False,True)
-            screen.blit(flip_pipe,pipe)
+            flip_pipe = pygame.transform.flip(pipe_surface, False, True)
+            screen.blit(flip_pipe, pipe)
 
+
+def check_collission(pipes):
+    for pipe in pipes:
+        if bird_box.colliderect(pipe):
+            return False
+
+    if bird_box.top <= 0 or bird_box.bottom >= 604:
+        return False
+
+    return True
+
+def rotate_bird(bird):
+    new_bird=pygame.transform.rotozoom(bird,-bird_movement*2,1)
+    return new_bird
+# extra variables for collision
+game_active = True
 
 # game loop
 while True:
@@ -84,20 +100,31 @@ while True:
             if event.key == pygame.K_SPACE:
                 bird_movement = 0
                 bird_movement -= 10
+            if event.key == pygame.K_SPACE and game_active == False:
+                game_active = True
+                pipe_list.clear()
+                bird_box.center = (100, 250)
+                bird_movement=0
+
         # adding pipe appear timer
         if event.type == SPAWNPIPE:
             pipe_list.extend(create_pipe())
 
     screen.blit(bg_surface, (0, 0))
+    if game_active:
+        # bird movement
 
-    # bird movement
-    screen.blit(bird, bird_box)
-    bird_movement += fall
-    bird_box.centery += bird_movement
+        bird_movement += fall
+        rotated_bird=rotate_bird(bird_surface)
+        bird_box.centery += bird_movement
+        screen.blit(rotated_bird, bird_box)
 
-    # pipe movement
-    pipe_list = move_pipes(pipe_list)
-    draw_pipes(pipe_list)
+        game_active = check_collission(pipe_list)
+
+        # pipe movement
+        pipe_list = move_pipes(pipe_list)
+        draw_pipes(pipe_list)
+
     # floor movement
     floorX -= 1
     floor_movement()
