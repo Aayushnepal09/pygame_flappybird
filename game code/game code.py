@@ -31,11 +31,11 @@ fall = 0.5  # gravity
 bird_movement = 0
 
 # adding pipes/multiple pipes
-pipe_load = pygame.image.load('pipe-green.png')
-pipe_load = pygame.transform.scale2x(pipe_load)
+pipe_surface = pygame.image.load('pipe-green.png')
+pipe_surface = pygame.transform.scale2x(pipe_surface)
 pipe_list = []
-pipe_timer = pygame.USEREVENT
-pygame.time.set_timer(pipe_timer, 1000)
+SPAWNPIPE = pygame.USEREVENT
+pygame.time.set_timer(SPAWNPIPE, 1000)
 
 
 # function to make floor continuously moving in the screen
@@ -44,19 +44,19 @@ def floor_movement():
     screen.blit(floor_surface, (floorX + 500, 400))
 
 
-def pipe_appear():
-    pipe_new = pipe_load.get_rect(midtop=(200, 250))
+def create_pipe():
+    pipe_new = pipe_surface.get_rect(midtop=(200, 250))
     return pipe_new
 
 
-def pipe_movement(pipes):
+def move_pipes(pipes):
     for pipe in pipes:
         pipe.centerx -= 5
     return pipes
 
 def draw_pipes(pipes):
-    for pipe_timer in pipes:
-        screen.blits(pipe_load,pipe_timer)
+    for pipe in pipes:
+        screen.blits(pipe_surface, pipe)
 
 
 
@@ -75,17 +75,18 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 bird_movement = 0
-                bird_movement -= 10
-        if event.type == pipe_timer:
-            pipe_list.append(pipe_appear())
+                bird_movement -=   10
+        if event.type == SPAWNPIPE:
+            pipe_list.append(create_pipe())
     screen.blit(bg_surface, (0, 0))
 
     # bird movement
     screen.blit(bird, bird_box)
     bird_movement += fall
     bird_box.centery += bird_movement
+
     #pipe movement
-    pipe_list=pipe_movement(pipe_list)
+    pipe_list=move_pipes(pipe_list)
     draw_pipes(pipe_list)
     # floor movement
     floorX -= 1
