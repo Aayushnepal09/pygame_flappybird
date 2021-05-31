@@ -86,8 +86,9 @@ def check_collission(pipes):
 def rotate_bird(bird):
     new_bird = pygame.transform.rotozoom(bird, -bird_movement * 5, 1)
     return new_bird
+
 def score_display():
-    score_surface=game_font.render('score',True,(200,0,200))
+    score_surface=game_font.render(str(int(score)),True,(200,0,200))
     score_rect=score_surface.get_rect(center=(250,30))
     screen.blit(score_surface,score_rect)
 
@@ -134,6 +135,7 @@ while True:
         # pipe movement
         pipe_list = move_pipes(pipe_list)
         draw_pipes(pipe_list)
+        score+=0.008
         score_display()
 
     # floor movement
