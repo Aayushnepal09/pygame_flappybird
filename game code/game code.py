@@ -8,7 +8,7 @@ pygame.init()
 # creating a screen
 screen = pygame.display.set_mode((500, 700))
 # title and icon
-pygame.display.set_caption("FLAPPYBIRD")
+pygame.display.set_caption("FLAPPY BIRD")
 icon = pygame.image.load('redbird-downflap.png')
 pygame.display.set_icon(icon)
 
@@ -78,9 +78,12 @@ def check_collission(pipes):
 
     return True
 
+
 def rotate_bird(bird):
-    new_bird=pygame.transform.rotozoom(bird,-bird_movement*2,1)
+    new_bird = pygame.transform.rotozoom(bird, -bird_movement * 5, 1)
     return new_bird
+
+
 # extra variables for collision
 game_active = True
 
@@ -104,7 +107,7 @@ while True:
                 game_active = True
                 pipe_list.clear()
                 bird_box.center = (100, 250)
-                bird_movement=0
+                bird_movement = 0
 
         # adding pipe appear timer
         if event.type == SPAWNPIPE:
@@ -115,7 +118,7 @@ while True:
         # bird movement
 
         bird_movement += fall
-        rotated_bird=rotate_bird(bird_surface)
+        rotated_bird = rotate_bird(bird_surface)
         bird_box.centery += bird_movement
         screen.blit(rotated_bird, bird_box)
 
