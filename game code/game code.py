@@ -87,10 +87,21 @@ def rotate_bird(bird):
     new_bird = pygame.transform.rotozoom(bird, -bird_movement * 5, 1)
     return new_bird
 
-def score_display():
-    score_surface=game_font.render(str(int(score)),True,(200,0,200))
-    score_rect=score_surface.get_rect(center=(250,30))
-    screen.blit(score_surface,score_rect)
+def score_display(game_state):
+    if game_state=='main game':
+        score_surface=game_font.render(str(int(score)),True,(200,0,200))
+        score_rect=score_surface.get_rect(center=(250,30))
+        screen.blit(score_surface,score_rect)
+    if game_state=='Game over':
+        score_surface = game_font.render(str(int(score)), True, (200, 0, 200))
+        score_rect = score_surface.get_rect(center=(250, 30))
+        screen.blit(score_surface, score_rect)
+
+        high_score_surface = game_font.render(str(int(high_score)), True, (200, 0, 200))
+        high_score_rect = high_score_surface.get_rect(center=(250, 60))
+        screen.blit(high_score_surface, high_score_rect)
+
+
 
 # extra variables for collision
 game_active = True
@@ -135,8 +146,11 @@ while True:
         # pipe movement
         pipe_list = move_pipes(pipe_list)
         draw_pipes(pipe_list)
+        #score  display
         score+=0.008
-        score_display()
+        score_display('main game')
+    else:
+        score_display('game over')
 
     # floor movement
     floorX -= 1
