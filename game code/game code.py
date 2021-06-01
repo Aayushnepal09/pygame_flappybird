@@ -90,6 +90,7 @@ def check_collission(pipes):
             return False
 
     if bird_box.top <= 0 or bird_box.bottom >= 604:
+        collision_sound.play()
         return False
 
     return True
