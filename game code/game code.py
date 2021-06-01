@@ -40,14 +40,16 @@ pipe_list = []
 SPAWNPIPE = pygame.USEREVENT
 pygame.time.set_timer(SPAWNPIPE, 1500)
 pipe_height = [500, 300, 400]
-#verables for score
+# verables for score
 score = 0
 high_score = 0
-#adding game over screen
-game_over_surface=pygame.image.load('game_over_PNG59.png')
-game_over_rect=game_over_surface.get_rect(center=(250,350))
+# adding game over screen
+game_over_surface = pygame.image.load('game_over_PNG59.png')
+game_over_rect = game_over_surface.get_rect(center=(250, 350))
 
-bird_sound=pygame.mixer.Sound('flap.wav')
+# adding sound
+bird_sound = pygame.mixer.Sound('flap.wav')
+collision_sound = pygame.mixer.Sound('co.wav')
 
 
 # function to make floor continuously moving in the screen
@@ -104,15 +106,17 @@ def score_display(game_state):
         score_rect = score_surface.get_rect(center=(250, 30))
         screen.blit(score_surface, score_rect)
 
-        high_score_surface = game_font.render(f'high score: {(int(high_score))}' ' ' 'Press space bar to restart', True, (200, 0, 200))
+        high_score_surface = game_font.render(f'high score: {(int(high_score))}' ' ' 'Press space bar to restart', True,
+                                              (200, 0, 200))
         high_score_rect = high_score_surface.get_rect(center=(250, 70))
         screen.blit(high_score_surface, high_score_rect)
 
 
-def update_score(score,high_score):
-    if score>high_score:
-        high_score=score
+def update_score(score, high_score):
+    if score > high_score:
+        high_score = score
     return high_score
+
 
 # extra variables for collision
 game_active = True
@@ -139,7 +143,7 @@ while True:
                 pipe_list.clear()
                 bird_box.center = (100, 250)
                 bird_movement = 0
-                score=0
+                score = 0
 
         # adding pipe appear timer
         if event.type == SPAWNPIPE:
@@ -163,10 +167,9 @@ while True:
         score += 0.008
         score_display('main game')
     else:
-        screen.blit(game_over_surface,game_over_rect)
-        high_score=update_score(score,high_score)
+        screen.blit(game_over_surface, game_over_rect)
+        high_score = update_score(score, high_score)
         score_display('Game over')
-
 
     # floor movement
     floorX -= 1
