@@ -9,6 +9,7 @@ game_font = pygame.font.Font('flappy bird.ttf', 50)
 
 # creating a screen
 screen = pygame.display.set_mode((500, 700))
+
 # title and icon
 pygame.display.set_caption("FLAPPY BIRD")
 icon = pygame.image.load('redbird-downflap.png')
@@ -26,12 +27,21 @@ floor_surface = pygame.image.load('base.png')
 floor_surface = pygame.transform.scale2x(floor_surface)
 floorX = 0
 
+# function to make floor continuously moving in the screen
+def floor_movement():
+    screen.blit(floor_surface, (floorX, 600))
+    screen.blit(floor_surface, (floorX + 500, 600))
+
 # adding bird
 bird_surface = pygame.image.load('redbird-downflap.png')
 bird_surface = pygame.transform.scale2x(bird_surface)
 bird_box = bird_surface.get_rect(center=(100, 250))
 fall = 0.5  # gravity
 bird_movement = 0
+
+def rotate_bird(bird):
+    new_bird = pygame.transform.rotozoom(bird, -bird_movement * 5, 1)
+    return new_bird
 
 # adding pipes/multiple pipes
 pipe_surface = pygame.image.load('pipe-green.png')
@@ -40,26 +50,6 @@ pipe_list = []
 SPAWNPIPE = pygame.USEREVENT
 pygame.time.set_timer(SPAWNPIPE, 1500)
 pipe_height = [500, 300, 400]
-# verables for score
-
-score = 0
-high_score = 0
-
-# adding game over screen
-game_over_surface = pygame.image.load('game_over_PNG59.png')
-game_over_rect = game_over_surface.get_rect(center=(250, 350))
-
-# adding sound
-bird_sound = pygame.mixer.Sound('flap.wav')
-collision_sound = pygame.mixer.Sound('co.wav')
-score_sound=pygame.mixer.Sound('passing pol.wav')
-score_sound_countdown=100
-
-# function to make floor continuously moving in the screen
-def floor_movement():
-    screen.blit(floor_surface, (floorX, 600))
-    screen.blit(floor_surface, (floorX + 500, 600))
-
 
 def create_pipe():
     random_pipe_pos = random.choice(pipe_height)
@@ -82,6 +72,27 @@ def draw_pipes(pipes):
             flip_pipe = pygame.transform.flip(pipe_surface, False, True)
             screen.blit(flip_pipe, pipe)
 
+# verables for score
+
+score = 0
+high_score = 0
+
+# adding game over screen
+game_over_surface = pygame.image.load('game_over_PNG59.png')
+game_over_rect = game_over_surface.get_rect(center=(250, 350))
+
+# adding sound
+bird_sound = pygame.mixer.Sound('flap.wav')
+collision_sound = pygame.mixer.Sound('co.wav')
+score_sound = pygame.mixer.Sound('passing pol.wav')
+score_sound_countdown = 100
+background_sound=pygame.mixer.Sound('background.mp3')
+
+
+
+
+
+
 
 def check_collission(pipes):
     for pipe in pipes:
@@ -96,9 +107,7 @@ def check_collission(pipes):
     return True
 
 
-def rotate_bird(bird):
-    new_bird = pygame.transform.rotozoom(bird, -bird_movement * 5, 1)
-    return new_bird
+
 
 
 def score_display(game_state):
@@ -131,6 +140,7 @@ while True:
 
     pygame.display.update()
     clock.tick(150)
+    #background_sound.play()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -172,10 +182,10 @@ while True:
         score += 0.01099
 
         score_display('main game')
-        score_sound_countdown-=1
-        if score_sound_countdown==0:
+        score_sound_countdown -= 1
+        if score_sound_countdown == 0:
             score_sound.play()
-            score_sound_countdown=100
+            score_sound_countdown = 100
 
 
     else:
@@ -188,3 +198,7 @@ while True:
     floor_movement()
     if floorX <= -500:
         floorX = 0
+
+# #reading high score
+# with open("HighScore.txt", "w") as file:
+#     highscore=file.write()
