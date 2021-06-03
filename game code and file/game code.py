@@ -18,6 +18,7 @@ icon = pygame.image.load('redbird-downflap.png')
 pygame.display.set_icon(icon)
 
 # Adjusting game speed
+
 clock = pygame.time.Clock()
 
 # adding background image
