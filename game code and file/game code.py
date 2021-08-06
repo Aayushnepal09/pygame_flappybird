@@ -38,7 +38,7 @@ def floor_movement():
 bird_surface = pygame.image.load('redbird-downflap.png')
 bird_surface = pygame.transform.scale2x(bird_surface)
 bird_box = bird_surface.get_rect(center=(100, 250))
-fall = 0.5  # gravity
+fall = 0.2  # gravity
 bird_movement = 0
 
 def rotate_bird(bird):
@@ -62,7 +62,7 @@ def create_pipe():
 
 def move_pipes(pipes):
     for pipe in pipes:
-        pipe.centerx -= 5
+        pipe.centerx -= 2
     return pipes
 
 
@@ -74,7 +74,7 @@ def draw_pipes(pipes):
             flip_pipe = pygame.transform.flip(pipe_surface, False, True)
             screen.blit(flip_pipe, pipe)
 
-# verables for score
+# variables for score
 
 score = 0
 
@@ -136,7 +136,7 @@ def update_score(score, high_score):
     if score > high_score:
         high_score = score
         high_score=int(high_score)
-        with open("HighScore.txt", "w") as file:
+        with open("highScore.txt", "w") as file:
             file.write(str(high_score))
     return high_score
 
@@ -160,7 +160,7 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 bird_movement = 0
-                bird_movement -= 10
+                bird_movement -= 6.5
                 bird_sound.play()
             if event.key == pygame.K_SPACE and game_active == False:
                 game_active = True
