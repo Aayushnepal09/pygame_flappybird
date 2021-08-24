@@ -188,7 +188,7 @@ while True:
         pipe_list = move_pipes(pipe_list)
         draw_pipes(pipe_list)
         # score  display
-        score += 0.0109
+        score += 0.001
 
         score_display('main game')
         score_sound_countdown -= 1
